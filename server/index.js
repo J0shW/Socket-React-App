@@ -15,8 +15,20 @@ const io = new Server(server, {
   },
 });
 
+let roomList = ['Green Room'];
+
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
+
+  socket.emit('room_list', roomList);
+
+  socket.on("create_room", (data) => {
+    console.log('create room:', data)
+    socket.join(data);
+    roomList = [...roomList, data];
+    console.log('updated room list:', roomList)
+    socket.emit('room_list', roomList);
+  });
 
   socket.on("join_room", (data) => {
     console.log('join room', data)
