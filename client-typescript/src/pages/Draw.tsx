@@ -1,21 +1,15 @@
 import { Link } from "react-router-dom";
 
-const Draw = () => {
+interface IProps {
+  room?: string;
+}
+
+const Draw: React.FC<IProps> = (props: IProps) => {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/blogs">Blogs</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-        </ul>
-      </nav>
+      <div>
+        <h1>{props.room}</h1>
+      </div>
     </>
   )
 };
