@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     socket.join(data);
     roomList = [...roomList, data];
     console.log('updated room list:', roomList)
-    socket.emit('room_list', roomList);
+    io.emit('room_list', roomList);
   });
 
   socket.on("join_room", (data) => {

@@ -1,38 +1,63 @@
-.App {
-  text-align: center;
+header {
+  padding-left: 50px;
+  font-family: 'Press Start 2P', cursive;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.createRoomContainer, .joinRoomContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-grow: 1;
+  padding: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+p {
+  padding: 0px 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input, button {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #b7b7b7;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.roomList {
+  border: 1px solid #b7b7b7;
+  border-radius: 10px;
+}
+
+.roomItem {
+  padding: 10px 15px;
+  border-bottom: 1px solid #b7b7b7;
+  font-size: 14px;
+}
+
+.roomItem:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.roomItem:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom: none;
+}
+
+.selectedRoom {
+  background-color: #ececec;
+}
+
+:focus-visible {
+  outline: none;
 }
