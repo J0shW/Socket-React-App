@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import io from "socket.io-client";
-
-const socket = io("http://localhost:3001");
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { SocketContext } from "../SocketContext";
 
 interface IProps {
   	room?: string;
-	setRoom: (room: string) => void;
+	setRoom: (room: string | undefined) => void;
 }
 
 const Home: React.FC<IProps> = (props: IProps) => {
+	const socket = useContext(SocketContext);
+	const navigate = useNavigate();
+
 	const [selectedRoom, setSelectedRoom] = useState('');
 	const [roomList, setroomList] = useState([]);
 	const [newRoomName, setNewRoomName] = useState('');
@@ -31,6 +33,15 @@ const Home: React.FC<IProps> = (props: IProps) => {
 			setroomList(roomList);
 		});
 	}, []);
+
+	useEffect(() => {
+		if (props.room === undefined) {
+			navigate('/');
+		} else {
+			navigate('/draw');
+		}
+	}, [props.room]);
+	
 
 	return (
 		<div className="App">
