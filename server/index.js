@@ -20,7 +20,10 @@ let roomList = ['Green Room'];
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  socket.emit('room_list', roomList);
+  socket.on("get_room_list", () => {
+    console.log('get room list');
+    socket.emit('room_list', roomList);
+  });
 
   socket.on("create_room", (data) => {
     console.log('create room:', data)

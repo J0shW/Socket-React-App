@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../SocketContext";
 
@@ -12,26 +12,47 @@ const Home: React.FC<IProps> = (props: IProps) => {
 	const navigate = useNavigate();
 
 	const [selectedRoom, setSelectedRoom] = useState('');
-	const [roomList, setroomList] = useState([]);
+	const [roomList, setroomList] = useState<string[]>([]);
 	const [newRoomName, setNewRoomName] = useState('');
 
 	const joinRoom = () => {
 		if (selectedRoom !== "") {
 			console.log('join', selectedRoom)
-			socket.emit("join_room", selectedRoom);
+			handleJoinRoom();
 			props.setRoom(selectedRoom);
 		}
 	};
 
-	const createRoom = () => {
+	const handleJoinRoom = useCallback(() => {
+		console.log('selectedRoom', selectedRoom)
+		socket.emit("join_room", selectedRoom);
+	}, [selectedRoom]);
+
+	const createRoom = useCallback(() => {
 		socket.emit("create_room", newRoomName);
-	};
+	}, [newRoomName]);
+
+	const getRoomList = useCallback(() => {
+		console.log('get room list')
+		socket.emit('get_room_list');
+	}, []);
+
+	const setRoomList = useCallback((roomList: string[]) => {
+		console.log('roomList', roomList);
+		setroomList(roomList)
+	  }, [roomList]);
 
 	useEffect(() => {
-		socket.on("room_list", (roomList) => {
-			console.log('roomList', roomList);
-			setroomList(roomList);
-		});
+		socket.on("room_list", setRoomList);
+
+		console.log('test')
+		getRoomList();
+
+		return () => {
+			// before the component is destroyed
+			// unbind all event handlers used in this component
+			socket.off("room_list", setRoomList);
+		};
 	}, []);
 
 	useEffect(() => {
