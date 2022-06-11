@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Editor from "../editor/Editor";
+import { SocketContext } from "../SocketContext";
 
 interface IProps {
   	room?: string;
@@ -7,6 +9,7 @@ interface IProps {
 }
 
 const Draw: React.FC<IProps> = (props: IProps) => {
+	const socket = useContext(SocketContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -19,9 +22,7 @@ const Draw: React.FC<IProps> = (props: IProps) => {
 
 	return (
 		<>
-			<div>
-				<h1>{props.room}</h1>
-			</div>
+			<Editor room={props.room} />
 			<button onClick={() => props.setRoom(undefined)}>Leave Room</button>
 		</>
 	)
